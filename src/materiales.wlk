@@ -31,7 +31,7 @@ class Material {
 	method energiaProducida(cantidad){
 		energiaProducida = cantidad
 	}
-	
+	 
 	
 }
 
