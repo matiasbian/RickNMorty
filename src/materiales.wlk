@@ -32,7 +32,7 @@ class Material {
 		energiaProducida = cantidad
 	}
 	  
-	
+	 
 }
 
 class Lata inherits Material {
