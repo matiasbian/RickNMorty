@@ -14,15 +14,11 @@ class Material {
 	
 	method electricidadConducible()
 	
+	
 	method electricidadConducible(cantidad){
 		electricidadConducible = cantidad
 	}
 	
-	method electricidadGenerable()
-	
-	method electricidadGenerable(cantidad){
-		electricidadGenerable = cantidad
-	}
 	
 	method esRadioactivo ()
 	
@@ -37,7 +33,6 @@ class Material {
 	}
 	
 	
-
 }
 
 class Lata inherits Material {
@@ -58,9 +53,6 @@ class Lata inherits Material {
 		return 0
 	}
 	
-	override method electricidadGenerable(){
-		0
-	}
 	
 }
 
@@ -84,10 +76,21 @@ class Cable inherits Material {
 		return 0
 	}
 	
-	override method electricidadGenerable(){
-		return 0
-	}
 }
 
 
 
+class Fleeb inherits Material{
+	const matComida =  #{}
+	var edad
+	
+	constructor(_edad){
+		edad = _edad
+	}
+	method comer(unaComida){
+		matComida.add(unaComida)
+	}
+	override method electricidadConducible(){
+		return matComida.min({comida => comida.electricidadConducible()})
+	}
+}
