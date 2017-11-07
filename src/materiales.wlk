@@ -2,7 +2,6 @@
 class Material {
 	var grsDeMetal
 	var electricidadConducible
-	var electricidadGenerable
 	var esRadioactivo
 	var energiaProducida
 
@@ -54,6 +53,7 @@ class Lata inherits Material {
 	}
 	
 	
+	
 }
 
 class Cable inherits Material {
@@ -91,6 +91,47 @@ class Fleeb inherits Material{
 		matComida.add(unaComida)
 	}
 	override method electricidadConducible(){
-		return matComida.min({comida => comida.electricidadConducible()})
+		return matComida.min({material => material.electricidadConducible()}).electricidadConducible()
+	}
+	override method esRadioactivo(){
+		return edad > 15 
+	}
+	override method grsDeMetal(){
+		return matComida.sum {material => material.grsDeMetal()} 	
+	}
+	override method energiaProducida(){
+		return matComida.max({material => material.electricidadConducible()}).electricidadConducible()
+	}
+}
+
+class MateriaOscura inherits Material{
+	const materialBase
+	
+	constructor(_materialBase){
+		materialBase = _materialBase
+	}
+	
+	override method electricidadConducible(){
+		return materialBase.electricidadConducible() / 2
+	}
+	override method grsDeMetal(){
+		return materialBase.grsDeMetal()
+	}
+	override method esRadioactivo(){
+		return false
+	}
+	override method energiaProducida(){
+		return materialBase * 2
+	}
+}
+
+class Morty{
+	var energia
+	var mochila = #{}
+	
+	
+	
+	method agregarMaterial(unMaterial){
+		mochila.add(unMaterial)
 	}
 }
