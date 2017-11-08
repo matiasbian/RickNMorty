@@ -1,13 +1,21 @@
 
 class Morty{
-	var energia
+	var energia = 0
 	var mochila = #{}
+	
+	constructor(_energia){
+		energia = _energia
+	}
+	
+	method energia(nvaEnergia){
+		energia = nvaEnergia
+	}
 	
 	method recolectar(unMaterial){
 		if(self.puedeRecolectar(unMaterial)){
 			mochila.add(unMaterial)
-			energia += unMaterial.energiaProducida()
-			energia -= unMaterial.grsDeMetal()
+			energia += unMaterial.aportePorRecolectar()
+			energia -= unMaterial.descuentoPorRecolectar()
 		}
 	}
 	
@@ -19,7 +27,7 @@ class Morty{
 	
 	method puedeRecolectar(unMaterial){
 		self.verificarMochila()
-		return (unMaterial.grsDeMetal()<unMaterial.energiaProducida())//esta parte me hace ruido por el tema de que no empieza con energía entonces no sé con qué comprar
+		return unMaterial.grsDeMetal() < energia
 	}
 	
 	method darObjetosA(unCompaniero){
