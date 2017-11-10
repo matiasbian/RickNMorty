@@ -1,13 +1,21 @@
 
 class Morty{
-	var energia
+	var energia = 0
 	var mochila = #{}
+	
+	constructor(_energia){
+		energia = _energia
+	}
+	
+	method energia(nvaEnergia){
+		energia = nvaEnergia
+	}
 	
 	method recolectar(unMaterial){
 		if(self.puedeRecolectar(unMaterial)){
 			mochila.add(unMaterial)
-			energia += unMaterial.energiaProducida()
-			energia -= unMaterial.grsDeMetal()
+			energia += unMaterial.aportePorRecolectar()
+			energia -= unMaterial.descuentoPorRecolectar()
 		}
 	}
 	
@@ -19,12 +27,50 @@ class Morty{
 	
 	method puedeRecolectar(unMaterial){
 		self.verificarMochila()
-		return (unMaterial.grsDeMetal()<unMaterial.energiaProducida())//esta parte me hace ruido por el tema de que no empieza con energía entonces no sé con qué comprar
+		return unMaterial.grsDeMetal() < energia
 	}
 	
 	method darObjetosA(unCompaniero){
-		unCompaniero.recolectar(mochila)
+		unCompaniero.intercambiar(mochila)
 		mochila=#{}
 	}
+	
+}
+
+class Rick{
+	var companiero
+	var materiales
+	var experimentos = #{}
+	
+	method companiero(nvoCompaniero){
+		companiero = nvoCompaniero
+	}
+	method agregarExperimento(nvoExperimento){
+		experimentos.add(nvoExperimento)
+	}
+	
+	method intercambiar(mochila){
+		self.recibirUnosMateriales(mochila)
+	}
+	method recibirUnosMateriales(unosMateriales){
+		materiales = unosMateriales
+	}
+	method experimentosQuePudeRealizar(){
+		return experimentos.filter {experimento => experimento.puedeConstruirse(materiales)}
+	}
+	method realizar(unExperimento){
+		if(self.puedeRealizar(unExperimento)){
+			self.removerElementosDeMochila(unExperimento.obtenerMateriales(materiales))
+			unExperimento.efectoAlconstruir(self)
+		}
+	}
+	method puedeRealizar(unExperimento){
+		return self.experimentosQuePudeRealizar().contains(unExperimento)
+	}
+	method removerElementosDeMochila(nvosMateriales){
+		materiales.removeAll(nvosMateriales)
+	}
+	//experimento.obtenerMateriales(materiales)
+	//experimento.efectoAlConstruir(rick)
 	
 }

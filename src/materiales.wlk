@@ -30,6 +30,12 @@ class Material {
 	method energiaProducida(cantidad){
 		energiaProducida = cantidad
 	}
+	method descuentoPorRecolectar(){
+		return self.grsDeMetal()
+	}
+	method aportePorRecolectar(){
+		return self.energiaProducida()
+	}
 	  
 	 
 }
@@ -101,6 +107,12 @@ class Fleeb inherits Material{
 	}
 	override method energiaProducida(){
 		return matComida.max({material => material.electricidadConducible()}).electricidadConducible()
+	}
+	override method descuentoPorRecolectar(){
+		return super() * 2
+	}
+	override method aportePorRecolectar(){
+		return if(! self.esRadioactivo()) 10 else 0
 	}
 }
 
