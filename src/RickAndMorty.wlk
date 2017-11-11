@@ -11,6 +11,14 @@ class Morty{
 		energia = nvaEnergia
 	}
 	
+	method energia(){
+		return energia
+	}
+	
+	method mochila(){
+		return mochila
+	}
+	
 	method recolectar(unMaterial){
 		if(self.puedeRecolectar(unMaterial)){
 			mochila.add(unMaterial)
@@ -45,6 +53,11 @@ class Rick{
 	method companiero(nvoCompaniero){
 		companiero = nvoCompaniero
 	}
+	
+	method companiero(){
+		return companiero
+	}
+	
 	method agregarExperimento(nvoExperimento){
 		experimentos.add(nvoExperimento)
 	}
@@ -59,13 +72,20 @@ class Rick{
 		return experimentos.filter {experimento => experimento.puedeConstruirse(materiales)}
 	}
 	method realizar(unExperimento){
-		if(self.puedeRealizar(unExperimento)){
-			self.removerElementosDeMochila(unExperimento.obtenerMateriales(materiales))
-			unExperimento.efectoAlconstruir(self)
+		if(!self.puedeRealizar(unExperimento)){
+			self.error("No se puede realizar experimento")
 		}
+		var elemABorrar = unExperimento.obtenerMateriales(materiales)
+		unExperimento.efectoAlConstruir(self)
+		self.removerElementosDeMochila(elemABorrar)
+		
 	}
 	method puedeRealizar(unExperimento){
 		return self.experimentosQuePudeRealizar().contains(unExperimento)
+	}
+	
+	method materiales (){
+		return materiales
 	}
 	method removerElementosDeMochila(nvosMateriales){
 		materiales.removeAll(nvosMateriales)

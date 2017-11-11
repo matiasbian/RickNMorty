@@ -54,6 +54,10 @@ class Lata inherits Material {
 		return 0.1 * grsDeMetal
 	}
 	
+	override method esRadioactivo(){
+		return false
+	}
+	
 	override method energiaProducida(){
 		return 0
 	}
@@ -80,6 +84,10 @@ class Cable inherits Material {
 	
 	override method energiaProducida(){
 		return 0
+	}
+	
+	override method esRadioactivo(){
+		return false
 	}
 	
 }

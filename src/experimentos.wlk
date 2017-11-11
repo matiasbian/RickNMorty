@@ -7,13 +7,17 @@ class Experimento inherits Material {
 
 	method efectoAlConstruir(rick)	
 	
-	method obtenerMateriales(materiales){
-		if (!self.puedeConstruirse(materiales)){
-			self.error("No tiene los materiales necesarios")
-		}
-		
-		return 0
-	}
+	method obtenerMateriales(materiales)
+}
+
+class ExperimentoDeEfecto {
+	var componentes
+	
+	method puedeConstruirse(materiales)	
+
+	method efectoAlConstruir(rick)	
+	
+	method obtenerMateriales(materiales)
 	
 }
 
@@ -40,17 +44,18 @@ class Bateria inherits Experimento{
 	
 	override method obtenerMateriales(materiales){
 		
-		super(materiales)
+		if (!self.puedeConstruirse(materiales)){
+			self.error("No tiene los materiales necesarios")
+		}
 		
-		return [materiales.find(condicion1)] + [materiales.find(condicion2)]
+		return #{materiales.find(condicion1)} + #{materiales.find(condicion2)}
 	}
 	
 	override method efectoAlConstruir(rick){
-		rick.energia( rick.energia() - 5 ) 
+		rick.companiero().energia( rick.companiero().energia() - 5 ) 
 		
-		var mat = self.obtenerMateriales(rick.companero().mochila()) // guardo los materiales que necesito para remover 
-		rick.remover(mat)		
-		rick.recolectar(new Bateria(mat.sum({material => material.grsDeMetal()})))	// hago una bateria con la cantidad de metal de sus materiales
+		var mat = self.obtenerMateriales(rick.materiales()) // guardo los materiales que necesito para crear la bateria	
+		rick.recibirUnosMateriales(#{new Bateria(mat)})	// hago una bateria con la cantidad de metal de sus materiales
 		
 	}
 	
@@ -99,14 +104,19 @@ class Circuito inherits Experimento {
 	}
 	
 	override method obtenerMateriales(materiales){
-		super(materiales)
+		if (!self.puedeConstruirse(materiales)){
+			self.error("No tiene los materiales necesarios")
+		}
 		
 		return materiales.all(condicion)
 	}
 	
 	override method efectoAlConstruir(rick){
+		rick.energia( rick.energia() - 5 ) 
 		
-		
+		var mat = self.obtenerMateriales(rick.companero().mochila()) // guardo los materiales que necesito para remover 
+		rick.companiero().recolectar(new Circuito(mat))	
+		rick.remover(mat)	
 	}
 	
 	// metodos como material
@@ -130,7 +140,7 @@ class Circuito inherits Experimento {
 	
 }
 
-class ShockElectrico inherits Experimento {
+class ShockElectrico inherits ExperimentoDeEfecto {
 	
 	const condicion1 = {material => material.energiaProducida() > 0}
 	const condicion2 = {material => material.electricidadConducible() > 0}
@@ -159,6 +169,10 @@ class ShockElectrico inherits Experimento {
 	method energiaResultante(materiales){
 		return materiales.first().energiaProducida() + materiales.last().electricidadConducible()
 	}
+	
+	
+	
+	
 	
 }
 
