@@ -1,7 +1,12 @@
 
 import RickAndMorty.*
-import materiales.*
 import experimentos.*
+import materiales.*
+
+
+
+
+
 
 describe "Test sobre Experimentos"{
 	
@@ -17,8 +22,8 @@ describe "Test sobre Experimentos"{
 	
 	fixture {
 		rick.companiero(morty)
+		//rick.agregarExperimento(circuito)
 		rick.agregarExperimento(bateria)
-
 		morty.recolectar(fleeb)
 		morty.recolectar(lata)
 		morty.recolectar(cable)
@@ -35,8 +40,12 @@ describe "Test sobre Experimentos"{
 	
 	
 	
-	test "reconfirmo que la bateria se puede realizar"{
+	test "confirmo que la bateria se puede realizar"{
 		assert.that(rick.puedeRealizar(bateria))
+	}
+	
+	test "confirmo que el circuito NO se puede realizar"{
+		assert.that(! rick.puedeRealizar(circuito))
 	}
 	test "Realizo un experimento y verifico que me quede sin los materiales" {
 		rick.realizar(bateria)
