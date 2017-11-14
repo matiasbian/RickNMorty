@@ -48,7 +48,7 @@ class Morty{
 class Rick{
 	var companiero
 	var materiales
-	var experimentos = #{}
+	var experimentos = #{	}
 	
 	method companiero(nvoCompaniero){
 		companiero = nvoCompaniero

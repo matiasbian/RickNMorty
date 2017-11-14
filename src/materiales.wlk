@@ -105,6 +105,9 @@ class Fleeb inherits Material{
 		matComida.add(unaComida)
 	}
 	override method electricidadConducible(){
+		if (matComida.size() == 0){
+			return 0
+		}
 		return matComida.min({material => material.electricidadConducible()}).electricidadConducible()
 	}
 	override method esRadioactivo(){

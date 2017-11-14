@@ -108,15 +108,15 @@ class Circuito inherits Experimento {
 			self.error("No tiene los materiales necesarios")
 		}
 		
-		return materiales.all(condicion)
+		return materiales.filter(condicion)
 	}
 	
 	override method efectoAlConstruir(rick){
-		rick.energia( rick.energia() - 5 ) 
+		rick.companiero().energia( rick.companiero().energia() - 5 ) 
 		
-		var mat = self.obtenerMateriales(rick.companero().mochila()) // guardo los materiales que necesito para remover 
+		var mat = self.obtenerMateriales(rick.materiales()) // guardo los materiales que necesito para remover 
 		rick.companiero().recolectar(new Circuito(mat))	
-		rick.remover(mat)	
+		rick.removerElementosDeMochila(mat)	
 	}
 	
 	// metodos como material
@@ -152,11 +152,17 @@ class ShockElectrico inherits ExperimentoDeEfecto {
 	//metodos como experimento
 	
 	override method puedeConstruirse(materiales){
-		return materiales.any(condicion1) && materiales.any(condicion2)
+		if (materiales.size () == 0){
+			return false
+		}
+		return materiales.any(condicion1)  &&  materiales.any(condicion2)
 	}
 	
 	override method obtenerMateriales(materiales){
-		super(materiales)
+		if (!self.puedeConstruirse(materiales)){
+			self.error("No tiene los materiales necesarios")
+		}
+		
 		
 		return [materiales.find(condicion1)] + [materiales.find(condicion2)] 
 	}
