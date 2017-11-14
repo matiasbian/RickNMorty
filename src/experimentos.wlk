@@ -152,9 +152,6 @@ class ShockElectrico inherits ExperimentoDeEfecto {
 	//metodos como experimento
 	
 	override method puedeConstruirse(materiales){
-		if (materiales.size () == 0){
-			return false
-		}
 		return materiales.any(condicion1)  &&  materiales.any(condicion2)
 	}
 	
@@ -169,7 +166,7 @@ class ShockElectrico inherits ExperimentoDeEfecto {
 	
 	
 	override method efectoAlConstruir(rick){
-		rick.companero().energia(rick.companero().energia() + self.energiaResultante(self.obtenerMateriales(rick.Mochila())))
+		rick.companiero().energia(rick.companiero().energia() + self.energiaResultante(self.obtenerMateriales(rick.materiales())))
 	}
 	
 	method energiaResultante(materiales){

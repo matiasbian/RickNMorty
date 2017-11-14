@@ -22,10 +22,11 @@ describe "Test sobre Experimentos"{
 	
 	fixture {
 		rick.companiero(morty)
+		rick.agregarExperimento(shock)
 		rick.agregarExperimento(circuito)
 		rick.agregarExperimento(bateria)
-		//rick.agregarExperimento(shock)
-		//fleeb.comer(lata)
+		
+		fleeb.comer(lata)
 		morty.recolectar(fleeb)
 		morty.recolectar(lata)
 		morty.recolectar(cable)
@@ -37,7 +38,7 @@ describe "Test sobre Experimentos"{
 	
 
 	test "Me fijo si peude realizar algun experimento" {
-		assert.equals(2,rick.experimentosQuePudeRealizar().size())
+		assert.equals(3,rick.experimentosQuePudeRealizar().size())
 	}	
 	
 	
@@ -57,9 +58,14 @@ describe "Test sobre Experimentos"{
 	
 	test "Realizo un circuito y verifico que me quede sin los materiales" {
 		rick.realizar(circuito)
-		assert.equals (1,rick.materiales().size())
+		assert.equals (0,rick.materiales().size())
 	}
 	
+	test "Realizo un shock y verifico que me quede sin los materiales" {
+		rick.realizar(shock)
+		assert.equals (rick.companiero().energia(),50)
+	}
+
 
 	
 	
