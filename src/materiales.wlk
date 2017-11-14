@@ -117,6 +117,9 @@ class Fleeb inherits Material{
 		return matComida.sum {material => material.grsDeMetal()} 	
 	}
 	override method energiaProducida(){
+		if (matComida.size() == 0){
+			return 0
+		}
 		return matComida.max({material => material.electricidadConducible()}).electricidadConducible()
 	}
 	override method descuentoPorRecolectar(){
