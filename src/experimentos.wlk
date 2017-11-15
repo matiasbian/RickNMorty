@@ -1,5 +1,8 @@
 import materiales.*
 
+//CORRECCION: Un experimento no es un material, a lo sumo puede construir un material
+//ESta mal que a un experimento le pueda preguntar gramos de metal, los gramos de metal se les puede
+//preguntar al material que el experimento construye
 class Experimento inherits Material {
 	var componentes
 	
@@ -9,7 +12,7 @@ class Experimento inherits Material {
 	
 	method obtenerMateriales(materiales)
 }
-
+//CORRECCION por que tenés esta clase igualita al Experimento?
 class ExperimentoDeEfecto {
 	var componentes
 	
@@ -21,7 +24,10 @@ class ExperimentoDeEfecto {
 	
 }
 
+//CORRECCION: Separar la bateria(material) del experimento crear bateria
+
 class Bateria inherits Experimento{
+	
 	
 	const condicion1 = {mat => mat.grsDeMetal() > 200} 
 	const condicion2 = { mat => mat.esRadioactivo()}
@@ -48,10 +54,12 @@ class Bateria inherits Experimento{
 			self.error("No tiene los materiales necesarios")
 		}
 		
+		//CORRECICON, también podrían usar una sola coleccion, #{materiales.find(condicion1), materiales.find(condicion2)}
 		return #{materiales.find(condicion1)} + #{materiales.find(condicion2)}
 	}
 	
 	override method efectoAlConstruir(rick){
+		//Mejor delegar en rick.disminuirEnergiaCompaniero(5)
 		rick.companiero().energia( rick.companiero().energia() - 5 ) 
 		
 		var mat = self.obtenerMateriales(rick.materiales()) // guardo los materiales que necesito para crear la bateria	
@@ -84,7 +92,7 @@ class Bateria inherits Experimento{
 	
 }
 
-
+//Separar el material Circuito del experimento crear Circuito
 class Circuito inherits Experimento {
 	
 	const condicion = {material => material.electricidadConducible() > 5}
@@ -157,12 +165,16 @@ class ShockElectrico inherits ExperimentoDeEfecto {
 	
 	override method obtenerMateriales(materiales){
 		super(materiales)
-		
+		//CORRECCION, por más que se una lista, puede seguir pasando que sea el mismo materia,
 		return [materiales.find(condicion1)] + [materiales.find(condicion2)] 
 	}
 	
 	
+	
 	override method efectoAlConstruir(rick){
+		//CORRECCION; tal vez convenga pasarle los materiales por parametro, por que no está 
+		//garantizado que el find siempre devuelva el mismo objeto
+		//podria ser que remuevas unos materiales, pero el calculo del efecto uses otro
 		rick.companero().energia(rick.companero().energia() + self.energiaResultante(self.obtenerMateriales(rick.Mochila())))
 	}
 	

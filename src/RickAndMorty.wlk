@@ -20,6 +20,7 @@ class Morty{
 	}
 	
 	method recolectar(unMaterial){
+		//CORRECCION: Si no puede debe romper!!!
 		if(self.puedeRecolectar(unMaterial)){
 			mochila.add(unMaterial)
 			energia += unMaterial.aportePorRecolectar()
@@ -34,7 +35,14 @@ class Morty{
 	}
 	
 	method puedeRecolectar(unMaterial){
+		//CORRECCION Acá esta mezclando preguntas booleanas (puedo hacer algo sí o no) con validación
+		//Si Morty tiene 3 elementos y le preguntan si puede recolectar algo tiene que decir "no" (false) 
+		//no romper.
+		//pero si a Morty le piden que recolecte algo y tiene la mochila llena, ahí si debe romper
 		self.verificarMochila()
+		//CORRECCION: Acá anda mal el fleeb, el fleeb requiere el doble de los gramos de metal
+		//Por eso en lugar de preguntarle los gramos de metal al material, hay que preguntarle la energia necesaria
+		//para recolectar, en este caso el mensaje lo llamaron: "descuentoPorRecolectar"
 		return unMaterial.grsDeMetal() < energia
 	}
 	
@@ -47,6 +55,7 @@ class Morty{
 
 class Rick{
 	var companiero
+	//CORRECCION: Los materiales deberian estar inicializados
 	var materiales
 	var experimentos = #{}
 	
@@ -66,6 +75,8 @@ class Rick{
 		self.recibirUnosMateriales(mochila)
 	}
 	method recibirUnosMateriales(unosMateriales){
+		//CORRECCION: Se perdieron los materiales que tenia antes :(
+		//Deberia ser un addAll
 		materiales = unosMateriales
 	}
 	method experimentosQuePudeRealizar(){
@@ -81,6 +92,8 @@ class Rick{
 		
 	}
 	method puedeRealizar(unExperimento){
+		//CORRECCION: Es más directo return unExperimento.puedeConstruirse(materiales)
+		//y para evitar la duplicacion en el filter anterior, usar self.puedeRealizar(experimento)
 		return self.experimentosQuePudeRealizar().contains(unExperimento)
 	}
 	

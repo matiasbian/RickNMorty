@@ -1,5 +1,15 @@
 
 class Material {
+	
+//CORRECCION: Lo importante del material 
+//son los mensajes que entienden, no está bien
+//definir variables, ya que muchas subclases
+//cambian la manera que tiene de calcular los valores
+//al contestar el mensaje. 
+//SI ocurriera que para un acaracterística, siempre
+//el valor se debe recordar en una variable entonces estaría
+//bien para esa característica.
+	
 	var grsDeMetal
 	var electricidadConducible
 	var esRadioactivo
@@ -19,8 +29,13 @@ class Material {
 	}
 	
 	
+	//CORRECCION es raro que el getter sea abstracto pero el setter lo guarda en una variable
+	//para ser consistente el getter debería revolver el valor del setter.
+	
 	method esRadioactivo ()
 	
+	//CORRECCION queda raro que le puedas decir a un material que ahora es radiactivo, pero cuando le preguntas si lo 
+	//(como por ejemplo un fleb menor de 15 años) te contesta que no
 	method esRadioactivo(booleano){
 		esRadioactivo = booleano
 	}
@@ -33,6 +48,7 @@ class Material {
 	method descuentoPorRecolectar(){
 		return self.grsDeMetal()
 	}
+	//CORRECCION, esto no está en el enunciado
 	method aportePorRecolectar(){
 		return self.energiaProducida()
 	}
@@ -41,6 +57,11 @@ class Material {
 }
 
 class Lata inherits Material {
+//CORRECCION: La univa variable que necesita 
+//son los gramos de metal, pero por herencia
+//recibe las otras tres variables.
+//Lo mejor es definir la variable para esta clase
+//nada mas.
 	
 	constructor (_grsDeMetal){
 		grsDeMetal = _grsDeMetal
@@ -67,6 +88,9 @@ class Lata inherits Material {
 }
 
 class Cable inherits Material {
+	//CORRECCION hereda variables innecesarias
+	//y sobrescribe toodo los metodos. 
+	//No sirve la herencia aca
 	var longitud
 	var seccion 
 	constructor (_longitud,_seccion){
@@ -95,6 +119,7 @@ class Cable inherits Material {
 
 
 class Fleeb inherits Material{
+	//CORRECCION la herencia no aporta nada
 	const matComida =  #{}
 	var edad
 	
@@ -125,6 +150,7 @@ class Fleeb inherits Material{
 }
 
 class MateriaOscura inherits Material{
+	//CORRECCION la herencia no aporta nada
 	const materialBase
 	
 	constructor(_materialBase){
@@ -141,6 +167,8 @@ class MateriaOscura inherits Material{
 		return false
 	}
 	override method energiaProducida(){
+		//CORRECCION: No está testeado, hay un bag sencillo:
+		//es materialBase.energiaProducida() * 2
 		return materialBase * 2
 	}
 }
