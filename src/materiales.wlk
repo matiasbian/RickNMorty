@@ -4,6 +4,14 @@ class Material {
 	var electricidadConducible
 	var esRadioactivo
 	var energiaProducida
+	
+	constructor (){
+		
+	}
+	constructor (_grsDeMetal){
+		grsDeMetal = _grsDeMetal
+	}
+	
 
 	method grsDeMetal()
 	
@@ -42,8 +50,8 @@ class Material {
 
 class Lata inherits Material {
 	
-	constructor (_grsDeMetal){
-		grsDeMetal = _grsDeMetal
+	constructor (_grsDeMetal)= super(_grsDeMetal){
+		
 	}
 	
 	override method grsDeMetal(){
@@ -69,7 +77,7 @@ class Lata inherits Material {
 class Cable inherits Material {
 	var longitud
 	var seccion 
-	constructor (_longitud,_seccion){
+	constructor (_longitud,_seccion)=super(){
 		longitud = _longitud
 		seccion = _seccion
 	}
@@ -117,13 +125,16 @@ class Fleeb inherits Material{
 		return matComida.sum {material => material.grsDeMetal()} 	
 	}
 	override method energiaProducida(){
+		if (matComida.size() == 0){
+			return 0
+		}
 		return matComida.max({material => material.electricidadConducible()}).electricidadConducible()
 	}
 	override method descuentoPorRecolectar(){
 		return super() * 2
 	}
 	override method aportePorRecolectar(){
-		return if(! self.esRadioactivo()) 10 else 0
+		return if(! self.esRadioactivo()) super()+10 else super()
 	}
 }
 
@@ -144,6 +155,55 @@ class MateriaOscura inherits Material{
 		return false
 	}
 	override method energiaProducida(){
-		return materialBase * 2
+		return materialBase.energiaProducida() * 2
+	}
+}
+
+class BateriaMaterial inherits Material {
+	var componentes
+	constructor(_componentes) = super(){
+		componentes = _componentes
+	}
+	
+		
+	
+	override method electricidadConducible(){
+		return 0
+	}
+	
+	override method grsDeMetal(){
+		return componentes.sum( {com => com.grsDeMetal()})	
+	}
+	
+	override method esRadioactivo(){
+		return true
+	}
+	
+	override method energiaProducida(){
+		return 2 * self.grsDeMetal()
+	}
+}
+
+class CircuitoMaterial inherits Material {
+		// metodos como material
+	var componentes
+	constructor(_componentes) = super(){
+		componentes = _componentes
+	}
+	
+	override method electricidadConducible(){
+		return componentes.sum({ comp => comp.electricidadConducible() }) * 3
+	}
+	
+	override method grsDeMetal(){
+		return componentes.sum({ comp => comp.grsDeMetal()})
+	}
+	
+	override method esRadioactivo(){
+		return componentes.any({ comp => comp.esRadioactivo()})
+	}
+	
+	override method energiaProducida(){
+		return 0
 	}
 }

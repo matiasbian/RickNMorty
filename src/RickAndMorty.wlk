@@ -20,35 +20,38 @@ class Morty{
 	}
 	
 	method recolectar(unMaterial){
-		if(self.puedeRecolectar(unMaterial)){
-			mochila.add(unMaterial)
-			energia += unMaterial.aportePorRecolectar()
-			energia -= unMaterial.descuentoPorRecolectar()
+		if(!self.puedeRecolectar(unMaterial)){
+			self.error("No se puede recolectar")
 		}
+		
+		
+		mochila.add(unMaterial)
+		energia += unMaterial.aportePorRecolectar()
+		energia -= unMaterial.descuentoPorRecolectar()
 	}
 	
-	method verificarMochila(){
-		if (mochila.size()>=3){
-			self.error("mochila llena, no se puede cargar mas de 3 materiales a la vez")
-		}
+	method mochilaLlena(){
+		return mochila.size()>3
 	}
 	
 	method puedeRecolectar(unMaterial){
-		self.verificarMochila()
-		return unMaterial.grsDeMetal() < energia
+		if (self.mochilaLlena() ){
+			self.error("Mochila llena")
+		}
+		return unMaterial.descuentoPorRecolectar() < energia
 	}
 	
 	method darObjetosA(unCompaniero){
 		unCompaniero.intercambiar(mochila)
-		mochila=#{}
+		mochila.clear()
 	}
 	
 }
 
 class Rick{
 	var companiero
-	var materiales
-	var experimentos = #{	}
+	var materiales = #{}
+	var experimentos = #{}
 	
 	method companiero(nvoCompaniero){
 		companiero = nvoCompaniero
@@ -66,7 +69,7 @@ class Rick{
 		self.recibirUnosMateriales(mochila)
 	}
 	method recibirUnosMateriales(unosMateriales){
-		materiales = unosMateriales
+		materiales.addAll( unosMateriales )
 	}
 	method experimentosQuePudeRealizar(){
 		return experimentos.filter {experimento => experimento.puedeConstruirse(materiales)}
@@ -81,7 +84,7 @@ class Rick{
 		
 	}
 	method puedeRealizar(unExperimento){
-		return self.experimentosQuePudeRealizar().contains(unExperimento)
+		return unExperimento.puedeConstruirse(materiales)
 	}
 	
 	method materiales (){
