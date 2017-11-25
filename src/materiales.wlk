@@ -44,6 +44,10 @@ class Material {
 	method aportePorRecolectar(){
 		return self.energiaProducida()
 	}
+	
+	method realizoAcciones(rick){
+		
+	}
 	  
 	 
 }
