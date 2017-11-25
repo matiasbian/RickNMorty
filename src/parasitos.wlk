@@ -45,7 +45,7 @@ class EntregarElementos inherits Accion{
 		rick = _rick
 	}
 	override method accionar(companiero){
-		companiero.darObjetosA(rick)
+		companiero.darObjetosA(rick) 
 	}
 }
 

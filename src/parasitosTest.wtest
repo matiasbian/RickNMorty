@@ -35,7 +35,7 @@ describe "Test sobre parasitos"{
 		
 		//morty.recolectar(fleeb)
 		morty.recolectar(lata)
-		morty.recolectar(fleeb)
+		morty.recolectar(fleeb) 
 		morty.recolectar(cable)
 		morty.darObjetosA(rick)
 		rick.realizar(bateria)

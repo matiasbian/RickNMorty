@@ -46,7 +46,7 @@ class Material {
 	}
 	
 	method realizoAcciones(rick){
-		
+		 
 	}
 	  
 	 
