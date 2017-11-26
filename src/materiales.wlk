@@ -5,6 +5,7 @@ class Material {
 	var esRadioactivo
 	var energiaProducida
 	
+	
 	constructor (){
 		
 	}
@@ -48,6 +49,8 @@ class Material {
 	method realizoAcciones(rick){
 		 
 	}
+	
+	method esSerVivo()
 	  
 	 
 }
@@ -74,7 +77,9 @@ class Lata inherits Material {
 		return 0
 	}
 	
-	
+	override method esSerVivo(){
+		return false
+	}
 	
 }
 
@@ -99,6 +104,10 @@ class Cable inherits Material {
 	}
 	
 	override method esRadioactivo(){
+		return false
+	}
+	
+	override method esSerVivo(){
 		return false
 	}
 	
@@ -140,6 +149,10 @@ class Fleeb inherits Material{
 	override method aportePorRecolectar(){
 		return if(! self.esRadioactivo()) super()+10 else super()
 	}
+	
+	override method esSerVivo(){
+		return true
+	}
 }
 
 class MateriaOscura inherits Material{
@@ -160,6 +173,10 @@ class MateriaOscura inherits Material{
 	}
 	override method energiaProducida(){
 		return materialBase.energiaProducida() * 2
+	}
+	
+	override method esSerVivo(){
+		return false
 	}
 }
 
@@ -186,6 +203,10 @@ class BateriaMaterial inherits Material {
 	override method energiaProducida(){
 		return 2 * self.grsDeMetal()
 	}
+	
+	override method esSerVivo(){
+		return false
+	}
 }
 
 class CircuitoMaterial inherits Material {
@@ -209,5 +230,9 @@ class CircuitoMaterial inherits Material {
 	
 	override method energiaProducida(){
 		return 0
+	}
+	
+	override method esSerVivo(){
+		return false
 	}
 }

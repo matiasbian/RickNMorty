@@ -1,7 +1,8 @@
 import parasitos.*
 import materiales.*
 import experimentos.*
-import RickAndMorty.*
+import Rick.*
+import companieros.*
 
 
 
@@ -22,7 +23,8 @@ describe "Test sobre parasitos"{
 	var recoletarOculto = new RecolectarElementoOculto(lata)
 	var parasito1 = new Parasito()
 	
-	
+	var jerry = new Jerry()
+	var summer = new Summer()
 	
 	
 	fixture {
@@ -41,17 +43,44 @@ describe "Test sobre parasitos"{
 		rick.realizar(bateria)
 		
 		morty.recolectar(cable)
-		parasito1.agregarAccion(entregoElemento)
+		
+		
+		parasito1.agregarAccion(recoletarOculto)
 		parasito1.agregarAccion(descartarElemento)
 		parasito1.agregarAccion(cambioDeEnergia)
-		parasito1.agregarAccion(recoletarOculto)
+		//parasito1.agregarAccion(entregoElemento)
+		
 
 		morty.recolectar(parasito1)
 		
 	}
 		
-		test "Recolecto parasito con todas acciones"{
-			assert.equals(534.982,morty.energia())
+		test "Recolecto parasito con todas acciones para morty"{
+			morty.recolectar(lata)
+			assert.equals(284.982,morty.energia())
+		}
+		
+		test "Recolecto parasito con todas acciones para Jerry"{
+
+			jerry.energia(500)
+
+			
+
+			jerry.recolectar(parasito1)
+			
+			
+			
+			assert.equals(265,jerry.energia())
+		}
+		
+		test "Recolecto parasito con todas acciones para Summer"{
+		
+			summer.energia(500)
+			
+
+			summer.recolectar(parasito1)
+			
+			assert.equals(317,summer.energia())
 		}
 		
 }

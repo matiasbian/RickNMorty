@@ -33,6 +33,10 @@ class Parasito inherits Material {
 	override method realizoAcciones(rick){
 		acciones.forEach({ accion => accion.accionar(rick)})
 	}
+	
+	override method esSerVivo(){
+		return true
+	}
 }
 
 class Accion {

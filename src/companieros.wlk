@@ -64,10 +64,7 @@ class Morty inherits Companiero{
 		return mochila.size() >3
 	}
 	
-	override method puedeRecolectar(unMaterial){
-		super(unMaterial)
-		return super(unMaterial) < energia
-	}
+	
 	
 	override method efectoDeRick(){
 		
@@ -92,10 +89,7 @@ class Summer inherits Companiero{
 		return mochila.size()>2
 	}
 	
-	override method puedeRecolectar(unMaterial){
-		super(unMaterial)
-		return super(unMaterial)*0.8 < energia
-	}
+
 	
 	override method efectoDeRick(){
 		
@@ -189,11 +183,7 @@ class Jerry inherits Companiero{
 		return mochila.size()>capacidadMochila
 	}
 	
-	override method puedeRecolectar(unMaterial){
-		
-		super(unMaterial)
-		return super(unMaterial) < energia
-	}
+
 	
 	
 	override method efectoDeRick(){
