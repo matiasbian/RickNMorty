@@ -1,52 +1,4 @@
-
-class Morty{
-	var energia = 0
-	var mochila = #{}
-	
-	constructor(_energia){
-		energia = _energia
-	}
-	
-	method energia(nvaEnergia){
-		energia = nvaEnergia
-	}
-	
-	method energia(){
-		return energia
-	}
-	
-	method mochila(){
-		return mochila
-	}
-	
-	method recolectar(unMaterial){
-		if(!self.puedeRecolectar(unMaterial)){
-			self.error("No se puede recolectar")
-		}
-		
-		
-		mochila.add(unMaterial)
-		energia += unMaterial.aportePorRecolectar()
-		energia -= unMaterial.descuentoPorRecolectar()
-	}
-	
-	method mochilaLlena(){
-		return mochila.size()>3
-	}
-	
-	method puedeRecolectar(unMaterial){
-		if (self.mochilaLlena() ){
-			self.error("Mochila llena")
-		}
-		return unMaterial.descuentoPorRecolectar() < energia
-	}
-	
-	method darObjetosA(unCompaniero){
-		unCompaniero.intercambiar(mochila)
-		mochila.clear()
-	}
-	
-}
+import companieros.*
 
 class Rick{
 	var companiero
@@ -55,6 +7,7 @@ class Rick{
 	
 	method companiero(nvoCompaniero){
 		companiero = nvoCompaniero
+		companiero.efectoDeRick()
 	}
 	
 	method companiero(){
@@ -97,3 +50,4 @@ class Rick{
 	//experimento.efectoAlConstruir(rick)
 	
 }
+

@@ -11,7 +11,7 @@ import materiales.*
 describe "Test sobre Experimentos"{
 	
 	var rick = new Rick()
-	var morty = new Morty(500)
+	var morty = new Morty(1500)
 	var lata = new Lata (250)
 	var cable = new Cable (3,3)
 	var bateria = new Bateria()
@@ -20,24 +20,29 @@ describe "Test sobre Experimentos"{
 	var fleeb = new Fleeb(25)
 	
 	
+	
 	fixture {
 		rick.companiero(morty)
-		rick.agregarExperimento(circuito)
+		fleeb.comer(lata)
+		//rick.agregarExperimento(circuito)
 		rick.agregarExperimento(bateria)
-		//rick.agregarExperimento(shock)
-		//fleeb.comer(lata)
-		morty.recolectar(fleeb)
-		morty.recolectar(lata)
-		morty.recolectar(cable)
+		rick.agregarExperimento(circuito)
+		rick.agregarExperimento(shock)
 		
+		//morty.recolectar(fleeb)
+		morty.recolectar(lata)
+		morty.recolectar(fleeb)
+		morty.recolectar(cable)
 		morty.darObjetosA(rick)
+		rick.realizar(bateria)
 		//rick.realizarExperimento(new Bateria())
 		
 	}
 	
 
+
 	test "Me fijo si peude realizar algun experimento" {
-		assert.equals(2,rick.experimentosQuePudeRealizar().size())
+		assert.equals(3,rick.experimentosQuePudeRealizar().size())
 	}	
 	
 	
@@ -46,13 +51,8 @@ describe "Test sobre Experimentos"{
 		assert.that(rick.puedeRealizar(bateria))
 	}
 	
-	test "confirmo que el circuito se puede realizar"{
-		assert.that(rick.puedeRealizar(circuito))
-	}
-	
-	test "Realizo una bateria y verifico que me quede sin los materiales" {
-		rick.realizar(bateria)
-		assert.equals (1,rick.materiales().size())
+	test "confirmo que el circuito  se puede realizar"{
+		assert.that( rick.puedeRealizar(circuito))
 	}
 	
 	test "Realizo un circuito y verifico que me quede sin los materiales" {
@@ -60,8 +60,19 @@ describe "Test sobre Experimentos"{
 		assert.equals (1,rick.materiales().size())
 	}
 	
-
+	test "Realizo una bateria y verifico que me quede sin los materiales" {
+		rick.realizar(bateria)
+		assert.equals (2,rick.materiales().size())
+	}
 	
+	
+	test "Realizo un shock y verifico que me quede sin los materiales" {
+		
+		rick.realizar(shock)
+		assert.equals (1,rick.materiales().size())
+		
+	}
+
 	
 
 }

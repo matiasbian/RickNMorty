@@ -4,6 +4,15 @@ class Material {
 	var electricidadConducible
 	var esRadioactivo
 	var energiaProducida
+	
+	
+	constructor (){
+		
+	}
+	constructor (_grsDeMetal){
+		grsDeMetal = _grsDeMetal
+	}
+	
 
 	method grsDeMetal()
 	
@@ -36,14 +45,20 @@ class Material {
 	method aportePorRecolectar(){
 		return self.energiaProducida()
 	}
+	
+	method realizoAcciones(rick){
+		 
+	}
+	
+	method esSerVivo()
 	  
 	 
 }
 
 class Lata inherits Material {
 	
-	constructor (_grsDeMetal){
-		grsDeMetal = _grsDeMetal
+	constructor (_grsDeMetal)= super(_grsDeMetal){
+		
 	}
 	
 	override method grsDeMetal(){
@@ -62,14 +77,16 @@ class Lata inherits Material {
 		return 0
 	}
 	
-	
+	override method esSerVivo(){
+		return false
+	}
 	
 }
 
 class Cable inherits Material {
 	var longitud
 	var seccion 
-	constructor (_longitud,_seccion){
+	constructor (_longitud,_seccion)=super(){
 		longitud = _longitud
 		seccion = _seccion
 	}
@@ -87,6 +104,10 @@ class Cable inherits Material {
 	}
 	
 	override method esRadioactivo(){
+		return false
+	}
+	
+	override method esSerVivo(){
 		return false
 	}
 	
@@ -126,7 +147,11 @@ class Fleeb inherits Material{
 		return super() * 2
 	}
 	override method aportePorRecolectar(){
-		return if(! self.esRadioactivo()) 10 else 0
+		return if(! self.esRadioactivo()) super()+10 else super()
+	}
+	
+	override method esSerVivo(){
+		return true
 	}
 }
 
@@ -147,6 +172,67 @@ class MateriaOscura inherits Material{
 		return false
 	}
 	override method energiaProducida(){
-		return materialBase * 2
+		return materialBase.energiaProducida() * 2
+	}
+	
+	override method esSerVivo(){
+		return false
+	}
+}
+
+class BateriaMaterial inherits Material {
+	var componentes
+	constructor(_componentes) = super(){
+		componentes = _componentes
+	}
+	
+		
+	
+	override method electricidadConducible(){
+		return 0
+	}
+	
+	override method grsDeMetal(){
+		return componentes.sum( {com => com.grsDeMetal()})	
+	}
+	
+	override method esRadioactivo(){
+		return true
+	}
+	
+	override method energiaProducida(){
+		return 2 * self.grsDeMetal()
+	}
+	
+	override method esSerVivo(){
+		return false
+	}
+}
+
+class CircuitoMaterial inherits Material {
+		// metodos como material
+	var componentes
+	constructor(_componentes) = super(){
+		componentes = _componentes
+	}
+	
+	override method electricidadConducible(){
+		return componentes.sum({ comp => comp.electricidadConducible() }) * 3
+	}
+	
+	override method grsDeMetal(){
+		return componentes.sum({ comp => comp.grsDeMetal()})
+	}
+	
+	override method esRadioactivo(){
+		return componentes.any({ comp => comp.esRadioactivo()})
+	}
+	
+	override method energiaProducida(){
+		return 0
+	}
+	
+	override method esSerVivo(){
+		return false
 	}
 }

@@ -1,0 +1,86 @@
+import parasitos.*
+import materiales.*
+import experimentos.*
+import Rick.*
+import companieros.*
+
+
+
+describe "Test sobre parasitos"{
+	
+	var rick = new Rick()
+	var morty = new Morty(1500)
+	var lata = new Lata (250)
+	var cable = new Cable (3,3)
+	var bateria = new Bateria()
+	var circuito = new Circuito()
+	var shock  = new ShockElectrico()
+	var fleeb = new Fleeb(25)
+	
+	var entregoElemento = new EntregarElementos(rick)
+	var descartarElemento = new DescartarElemento()
+	var cambioDeEnergia = new CambioDeEnergia(20)
+	var recoletarOculto = new RecolectarElementoOculto(lata)
+	var parasito1 = new Parasito()
+	
+	var jerry = new Jerry()
+	var summer = new Summer()
+	
+	
+	fixture {
+		rick.companiero(morty)
+		fleeb.comer(lata)
+		//rick.agregarExperimento(circuito)
+		rick.agregarExperimento(bateria)
+		rick.agregarExperimento(circuito)
+		rick.agregarExperimento(shock)
+		
+		//morty.recolectar(fleeb)
+		morty.recolectar(lata)
+		morty.recolectar(fleeb) 
+		morty.recolectar(cable)
+		morty.darObjetosA(rick)
+		rick.realizar(bateria)
+		
+		morty.recolectar(cable)
+		
+		
+		parasito1.agregarAccion(recoletarOculto)
+		parasito1.agregarAccion(descartarElemento)
+		parasito1.agregarAccion(cambioDeEnergia)
+		//parasito1.agregarAccion(entregoElemento)
+		
+
+		morty.recolectar(parasito1)
+		
+	}
+		
+		test "Recolecto parasito con todas acciones para morty"{
+			morty.recolectar(lata)
+			assert.equals(284.982,morty.energia())
+		}
+		
+		test "Recolecto parasito con todas acciones para Jerry"{
+
+			jerry.energia(500)
+
+			
+
+			jerry.recolectar(parasito1)
+			
+			
+			
+			assert.equals(265,jerry.energia())
+		}
+		
+		test "Recolecto parasito con todas acciones para Summer"{
+		
+			summer.energia(500)
+			
+
+			summer.recolectar(parasito1)
+			
+			assert.equals(317,summer.energia())
+		}
+		
+}
