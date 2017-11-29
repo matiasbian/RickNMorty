@@ -7,7 +7,22 @@ class Experimento {
 
 	method efectoAlConstruir(rick)	
 	
-	method obtenerMateriales(materiales)
+	method obtenerMateriales(materiales,estrategias)
+	
+	method ejecutarConEstrategia(estrategia,materiales){
+		var materialesConEstrategia =#{}
+		
+		materiales.forEach{material => self.comandoASeguir(material,materialesConEstrategia,materiales,estrategia)}								 
+		return materialesConEstrategia
+		
+	}
+	method comandoASeguir(material,materialesAGuardar,materiales,estrategia){
+		return materialesAGuardar.add(estrategia.obtenerMateriales(materiales))
+		
+		
+	
+	}
+	method guardarYEliminarMaterial(estrategia,maeterial)
 }
 
 
@@ -24,13 +39,13 @@ class Bateria inherits Experimento{
 		return materiales.any ( condicion1 ) && materiales.any ( condicion2 )
 	}
 	
-	override method obtenerMateriales(materiales){
+	override method obtenerMateriales(materiales,estrategia){
 		
 		if (!self.puedeConstruirse(materiales)){
 			self.error("No tiene los materiales necesarios")
 		}
 		
-		return #{materiales.find(condicion1)} + #{materiales.find(condicion2)}
+		return self.ejecutarConEstrategia(estrategia,#{materiales.find(condicion1)} + #{materiales.find(condicion2)})
 	}
 	
 	override method efectoAlConstruir(rick){
@@ -57,13 +72,13 @@ class Circuito inherits Experimento {
 		return materiales.any(condicion)
 	}
 	
-	override method obtenerMateriales(materiales){
+	override method obtenerMateriales(estrategia,materiales){
 	
 		if (!self.puedeConstruirse(materiales)){
 			self.error("No tiene los materiales necesarios" + materiales  )
 		}
 		
-		return materiales.filter(condicion)
+		return self.ejecutarConEstrategia(estrategia,materiales.filter(condicion))
 	}
 	
 	override method efectoAlConstruir(rick){
@@ -95,12 +110,12 @@ class ShockElectrico inherits Experimento {
 		return materiales.any(condicion1) && materiales.any(condicion2)
 	}
 	
-	override method obtenerMateriales(materiales){
+	override method obtenerMateriales(materiales,estrategia){
 		if (!self.puedeConstruirse(materiales)){
 			self.error("No tiene los materiales necesarios" + materiales  )
 		}
 		
-		return [materiales.find(condicion1)] + [materiales.find(condicion2)] 
+		return self.ejecutarConEstrategia(#{materiales.find(condicion1)} + #{materiales.find(condicion2)}) 
 	}
 	
 	

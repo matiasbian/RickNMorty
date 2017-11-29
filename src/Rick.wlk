@@ -27,11 +27,11 @@ class Rick{
 	method experimentosQuePudeRealizar(){
 		return experimentos.filter {experimento => experimento.puedeConstruirse(materiales)}
 	}
-	method realizar(unExperimento){
+	method realizar(unExperimento,estrategia){
 		if(!self.puedeRealizar(unExperimento)){
 			self.error("No se puede realizar experimento")
 		}
-		var elemABorrar = unExperimento.obtenerMateriales(materiales)
+		var elemABorrar = unExperimento.obtenerMateriales(materiales,estrategia)
 		unExperimento.efectoAlConstruir(self)
 		self.removerElementosDeMochila(elemABorrar)
 		
