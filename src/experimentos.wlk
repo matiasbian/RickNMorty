@@ -4,7 +4,7 @@ class Experimento {
 	var componentes
 	
 	method puedeConstruirse(materiales)	
-
+ 
 	method efectoAlConstruir(rick)	
 	
 	method obtenerMateriales(materiales,estrategias)

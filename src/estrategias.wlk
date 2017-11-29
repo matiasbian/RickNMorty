@@ -4,7 +4,7 @@ import materiales.*
 class Estrategia{
 	
 	var res = #{}
-
+ 
 	method obtenerMaterial(materiales){
 		var material = self.estrategia(materiales)
 		res.add(material)

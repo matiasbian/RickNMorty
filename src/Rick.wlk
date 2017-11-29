@@ -9,7 +9,8 @@ class Rick{
 		companiero = nvoCompaniero
 		companiero.efectoDeRick()
 	}
-	
+	 
+	 
 	method companiero(){
 		return companiero
 	}
